@@ -43,7 +43,8 @@
 (define (r:repeat min max expr)
   (apply r:seq
          (append (make-list min expr)
-                 (cond [(not max) (list expr "*")]
+                 (cond [(and (= 1 min) (not max)) (list "+")]
+                       [(not max) (list expr "*")]
                        [(= max min) '()]
                        (else (make-list (- max min) (r:alt expr "")))))))
 
@@ -97,7 +98,7 @@
 (define (r:+ expr) (r:repeat 1 #f expr))
 
 (qce (r:* (r:seq "abc")) "\\(\\(abc\\)*\\)")
-(qce (r:+ (r:seq "abc")) "\\(\\(abc\\)\\(abc\\)*\\)") ; FIX: don't like
+(qce (r:+ (r:seq "abc")) "\\(\\(abc\\)+\\)")
 
 ;;; DONE
 
