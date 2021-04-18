@@ -91,6 +91,14 @@
 
 (qce (bracket "abc" (curry map char-upcase)) "[ABC]")
 
+;;; Exercise 2.6: implement r:* and r:+
+
+(define (r:* expr) (r:repeat 0 #f expr))
+(define (r:+ expr) (r:repeat 1 #f expr))
+
+(qce (r:* (r:seq "abc")) "\\(\\(abc\\)*\\)")
+(qce (r:+ (r:seq "abc")) "\\(\\(abc\\)\\(abc\\)*\\)") ; FIX: don't like
+
 ;;; DONE
 
 (qc (displayln 'done))
