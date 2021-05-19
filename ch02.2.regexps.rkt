@@ -100,6 +100,25 @@
 (qce (r:* (r:seq "abc")) "\\(\\(abc\\)*\\)")
 (qce (r:+ (r:seq "abc")) "\\(\\(abc\\)+\\)")
 
+;;; Exercise 2.7: Reimplement r:repeat using intervals and try not to puke.
+
+;; 2.7a: haha... produces the exact same thing
+;;
+;; 2.7b: Eva's is closer to the current implementation and would
+;;       require a very small change.
+;;
+;; 2.7c: Ben's cleans up all the edge cases with a very simple implementation.
+;;
+;; 2.7d:
+
+(define (r:rep min max expr)
+  (format "~s{~s,~s}" expr min max))
+
+(qce (r:rep 0 1  (r:seq "abc")) "\\(\\(\\(abc\\)\\|\\)\\)")
+(qce (r:rep 1 2  (r:seq "abc")) "\\(\\(abc\\)\\(\\(abc\\)\\|\\)\\)") ; horrific
+(qce (r:rep 0 #f (r:seq "abc")) "\\(\\(abc\\)*\\)")
+(qce (r:rep 1 1  (r:seq "abc")) "\\(\\(abc\\)\\)")
+
 ;;; DONE
 
 (qc (displayln 'done))
